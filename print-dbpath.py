@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 #sabryr 10-06-2021
+#https://github.com/easybuilders/easybuild-framework/blob/develop/easybuild/framework/easyconfig/easyconfig.py
 
 import sys
 from os import path
@@ -45,10 +46,20 @@ def append_info(filepath):
 def test_print_dbpath():
 	print("ToDo, write a test")
 
+def inject_v(eco):
+	#eco.log.info("[pre-configure hook] including Database location") 
+	#eco.cfg['configopts'] = eco.cfg['configopts'].replace('--with-verbs', '--without-verbs')
+	print(type(eco))
+
 def parse_hook(self):
 	print(self.name)
 	if self.name in MODULES_TO_CHECK:
 		print("include database loc")
+		#inject_v(self)
+		print(self['modloadmsg'])
+		self['modloadmsg']='example.patch'
+		print(self['modloadmsg'])
 
 if __name__ == "__main__":
 	parse_hook(None)
+
