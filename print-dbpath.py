@@ -25,16 +25,20 @@ def append_info(filepath):
 	#ToDo:Take the last line finding out of this funtion
 	r = re.compile(".*moduleclass.*")
 	r2 = re.compile(".*Database location.*")
-	print(len(content))
 	moduleclasses=list(filter(r.match, content))
 	if len(moduleclasses)>0:
-		module_class_loc=content.index(moduleclasses[-1])
+		location_to_modify=content.index(moduleclasses[-1])
 		database_locs=list(filter(r2.match, content))
-		print(len(database_locs))
 		if len(database_locs)==0:
 			print("It seems you are trying to install a module that needs reference data")
 			print("We have already setup this data in a central location")
 			print("Please include the following line in the easybuild file and then then do the instlation again")
+			print("Modification needed ")
+			print("File to be modify, (please make a copy and modify, keep the original)")
+			print("-------------------")
+			print(filepath)
+			print("-------------------")
+			print("Include the following in line ",location_to_modify)
 
 	
 def test_print_dbpath():
