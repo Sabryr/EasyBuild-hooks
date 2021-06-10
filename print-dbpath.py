@@ -5,8 +5,9 @@ import sys
 from os import path
 import re
 #modloadmsg = "Database location : /cluster/shared"
+MODULES_TO_CHECK=["BLAST+","BLAST", "BUSCO", "Kraken2"]
 
-def post_package_hook(self):
+def parse_hook2(self):
 	if len(sys.argv) >1:
 		eb_file = sys.argv[1]
 		print("Arguments of the script : ", eb_file)	
@@ -44,6 +45,10 @@ def append_info(filepath):
 def test_print_dbpath():
 	print("ToDo, write a test")
 
+def parse_hook(self):
+	print(self.name)
+	if self.name in MODULES_TO_CHECK:
+		print("include database loc")
 
 if __name__ == "__main__":
-	post_package_hook(None)
+	parse_hook(None)
