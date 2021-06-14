@@ -1,12 +1,27 @@
 #!/usr/bin/env python
 #sabryr 10-06-2021
 #https://github.com/easybuilders/easybuild-framework/blob/develop/easybuild/framework/easyconfig/easyconfig.py
+#This is an EasyBuild hook to include database location for relevent modules 
+# The hook is trigger when exact match of file in /cluster/shared/databases/module-trigers
+# with the eb file name variable is found 
 
 import sys
 from os import path
 import re
+from os import listdir
+from os.path import isfile, join
+
 #modloadmsg = "Database location : /cluster/shared"
-MODULES_TO_CHECK=["BLAST+","BLAST", "BUSCO", "Kraken2"]
+# MODULES_TO_CHECK=["BLAST+","BLAST", "BUSCO", "Kraken2"]
+
+LOCATION_PREFIX="/cluster/shared/databases/module-trigers"
+MODULES_TO_CHECK=[]
+
+def get_modules_to_fix():
+	MODULES_TO_CHECK = [f for f in listdir(LOCATION_PREFIX) if isfile(join(LOCATION_PREFIX, f))]
+	print(MODULES_TO_CHECK)
+
+
 
 def parse_hook2(self):
 	if len(sys.argv) >1:
@@ -57,9 +72,10 @@ def parse_hook(self):
 		print("include database loc")
 		#inject_v(self)
 		print(self['modloadmsg'])
-		self['modloadmsg']='example.patch'
+		self['modloadmsg']='/cluster/shared/databases/'
 		print(self['modloadmsg'])
 
 if __name__ == "__main__":
-	parse_hook(None)
+	#parse_hook(None)
+	get_modules_to_fix()
 
