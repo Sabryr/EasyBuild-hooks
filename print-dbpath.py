@@ -14,14 +14,13 @@ from os.path import isfile, join
 #modloadmsg = "Database location : /cluster/shared"
 # MODULES_TO_CHECK=["BLAST+","BLAST", "BUSCO", "Kraken2"]
 
-LOCATION_PREFIX="/cluster/shared/databases/module-trigers"
-MODULES_TO_CHECK=[]
+LOCATION_PREFIX="/cluster/shared/databases/module-trigers/"
+#MODULES_TO_CHECK=[]
 
 def get_modules_to_fix():
 	MODULES_TO_CHECK = [f for f in listdir(LOCATION_PREFIX) if isfile(join(LOCATION_PREFIX, f))]
-	print(MODULES_TO_CHECK)
-
-
+	#print(MODULES_TO_CHECK)
+	return MODULES_TO_CHECK
 
 def parse_hook2(self):
 	if len(sys.argv) >1:
@@ -66,14 +65,28 @@ def inject_v(eco):
 	#eco.cfg['configopts'] = eco.cfg['configopts'].replace('--with-verbs', '--without-verbs')
 	print(type(eco))
 
+def read_info(filepath):
+	DB_LOC=""
+	print("Database_location filepath = "+filepath)
+	with open(filepath, "r") as f:
+		while True:
+			line = f.readline()
+			if line.startswith('Database_location='):
+ 				#DB_LOC=line.split("=", 1)[1] 
+ 				DB_LOC=line
+				break
+	return DB_LOC
+	
 def parse_hook(self):
-	print(self.name)
+	#print(self.name)
+	MODULES_TO_CHECK=get_modules_to_fix()
+	#print(MODULES_TO_CHECK)
 	if self.name in MODULES_TO_CHECK:
-		print("include database loc")
 		#inject_v(self)
-		print(self['modloadmsg'])
-		self['modloadmsg']='/cluster/shared/databases/'
-		print(self['modloadmsg'])
+		DB_LOC=read_info(LOCATION_PREFIX+self.name)
+		#print("DB_LOC"+DB_LOC)
+		self['modloadmsg']=DB_LOC
+		#print(self['modloadmsg'])
 
 if __name__ == "__main__":
 	#parse_hook(None)
