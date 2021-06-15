@@ -27,3 +27,18 @@ cat /cluster/shared/databases/module-trigers/BLAST+
 
 Database_location=/cluster/shared/databases/blast/latest
 ```
+
+### How do I trigger this trigger ?
+
+Ideally the following should be included in the module files
+for BuildEnv, so nothing extra needed.
+
+In the file
+/cluster/modulefiles/Core/BuildEnv.lua 
+
+setenv("EASYBUILD_HOOKS", "/cluster/installations/easybuild/hooks/saga_eb_hooks.py")
+
+Untill that is finalized, use
+ --hooks /cluster/installations/easybuild/hooks/saga_eb_hooks.py 
+
+
