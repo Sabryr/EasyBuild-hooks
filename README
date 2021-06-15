@@ -1,1 +1,29 @@
-To trigger customizations during easybuild
+# To trigger customizations during easybuild
+
+##  reference_database_path
+
+This trigger is to inject the location of the reference data 
+location to the module file. When this is triggered something
+like the following will be included in the module file
+
+```
+if mode() == "load" then
+io.stderr:write([==[Database_location=/cluster/shared/databases/blast/latest]==])
+end
+```
+
+### How to decide which module to update with what ?
+For each module file that needs this update, a file should be
+created with the exact name of the module in the following location
+
+/cluster/shared/databases/module-trigers
+
+example file:
+```
+cat /cluster/shared/databases/module-trigers/BLAST+ 
+
+#Sabryr 14-06-2021
+#Database location
+
+Database_location=/cluster/shared/databases/blast/latest
+```
