@@ -65,6 +65,9 @@ def inject_v(eco):
 	#eco.cfg['configopts'] = eco.cfg['configopts'].replace('--with-verbs', '--without-verbs')
 	print(type(eco))
 
+def read_info_for_module_name(module_name):
+	return read_info(LOCATION_PREFIX+module_name)
+
 def read_info(filepath):
 	DB_LOC=""
 	print("Database_location filepath = "+filepath)
