@@ -39,6 +39,17 @@ In the file
 setenv("EASYBUILD_HOOKS", "/cluster/installations/easybuild/hooks/saga_eb_hooks.py")
 
 Untill that is finalized, use
- --hooks /cluster/installations/easybuild/hooks/saga_eb_hooks.py 
+--hooks /cluster/installations/easybuild/hooks/saga_eb_hooks.py 
+
+Example to install blast+
+To install new module
+```
+ eb --hooks /cluster/installations/easybuild/hooks/saga_eb_hooks.py --robot  BLAST+-2.11.0-gompi-2020b.eb
+```
+
+To modify existing module
+```
+ eb --hooks /cluster/installations/easybuild/hooks/saga_eb_hooks.py --force --robot  BLAST+-2.11.0-gompi-2020b.eb
+```
 
 
